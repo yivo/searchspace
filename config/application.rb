@@ -16,6 +16,21 @@ module SC
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # Now we are able to require "lib/script_in_lib.rb".
+    $LOAD_PATH.unshift File.expand_path('../../', __FILE__)
+
+    # Now we aren't able to require "script_in_lib.rb".
+    $LOAD_PATH.delete  File.expand_path('../../lib', __FILE__)
+
+    # Autoloads directly from app: no more app/my_module/my_module/my_class -> app/my_module/my_class.rb.
+    config.autoload_paths << Rails.root.join('app')
+
+    # Autoloads from lib.
+    config.autoload_paths << Rails.root.join('lib')
+
+    # Disables reloading for lib.
+    config.autoload_once_paths << Rails.root.join('lib')
   end
 end
 
