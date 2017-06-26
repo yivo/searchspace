@@ -18,8 +18,17 @@ group :development do
 end
 
 group :development, :test do
-  gem 'capistrano',               '~> 3.6', require: false
-  gem 'capistrano-rails',         '~> 1.3', require: false
-  gem 'capistrano-passenger',     '~> 0.2', require: false
-  gem 'capistrano-rbenv-support', '~> 1.0', require: false
+  { require: false }.tap do |options|
+    # Testing
+    gem 'rspec-rails',         '~> 3.5',  options
+    gem 'capybara',            '~> 2.13', options
+    gem 'selenium-webdriver',  '~> 3.3',  options
+    gem 'chromedriver-helper', '~> 1.1',  options
+
+    # Deployment
+    gem 'capistrano',               '~> 3.6', options
+    gem 'capistrano-rails',         '~> 1.3', options
+    gem 'capistrano-passenger',     '~> 0.2', options
+    gem 'capistrano-rbenv-support', '~> 1.0', options
+  end
 end
