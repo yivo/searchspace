@@ -22,3 +22,5 @@ module SC
     # config.i18n.default_locale = :de
   end
 end
+
+require File.expand_path('../url', __FILE__)
