@@ -1,0 +1,44 @@
+language: ruby
+
+cache: bundler
+
+dist: trusty
+
+sudo: required
+
+# https://docs.travis-ci.com/user/customizing-the-build/#Building-Specific-Branches
+branches:
+  only:
+    - /.*/
+
+env:
+  - RAILS_ENV=test RAKE_ENV=test DISPLAY=:0.0 CHROME_BIN=/usr/bin/google-chrome
+
+# Execute all of the commands which need to be executed before installing dependencies.
+before_install:
+ - sudo apt-get update
+ - npm install bower
+
+ # http://blog.500tech.com/setting-up-travis-ci-to-run-tests-on-latest-google-chrome-version/
+ - sudo apt-get install -y libappindicator1 fonts-liberation
+ - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ - sudo dpkg -i google-chrome*.deb
+
+ - gem install bundler
+
+# Install all of the dependencies you need here.
+install:
+ - bundle install --jobs=4 --retry=4 --deployment
+ - bundle exec rake bower:install
+
+# Execute all of the commands which need to be executed before running actual tests.
+before_script:
+
+# Execute all of the commands which should make the build pass or fail.
+script:
+  - xvfb-run --auto-servernum --server-args="-screen 0 1280x800x16" bundle exec rspec
+
+after_success:
+  # http://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && bundle exec cap production deploy
+
