@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.9.rc2'
+gem 'rails', '~> 4.2'
 gem 'uglifier', '~> 3.2'
 gem 'sprockets-rails', '~> 3.2'
 gem 'browser', '~> 2.0'
