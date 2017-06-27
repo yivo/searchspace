@@ -18,7 +18,7 @@ class Search::Source
   end
 
   def create_criteria
-    yield("search/#{name}_criteria".camelize.safe_constantize || Search::Criteria)
+    yield("search/#{name}_criteria".camelize.constantize)
   end
 
   def create_result
