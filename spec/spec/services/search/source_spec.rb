@@ -1,10 +1,10 @@
 describe Search::Source do
-  describe 'descendants tracking' do
-    before do
-      class FooSource < Search::Source; end
-      class BarSource < Search::Source; end
-    end
+  before do
+    class FooSource < Search::Source; end
+    class BarSource < Search::Source; end
+  end
 
+  describe 'descendants tracking' do
     it 'knows what sources are available' do
       expect(Search::Source.descendants).to include(FooSource, BarSource)
     end
@@ -41,6 +41,12 @@ describe Search::Source do
   describe '#create_criteria' do
     it 'passes basic search criteria' do
       expect(Search::Source.new.create_criteria { |k| k.new('HTC') }).to be_instance_of(Search::Criteria)
+    end
+  end
+
+  describe '#create_results_builder' do
+    it 'raises an exception if no results builder defined' do
+      expect { FooSource.new.create_results_builder }.to raise_error(NameError)
     end
   end
 end

@@ -24,4 +24,8 @@ class Search::Source
   def create_result
     yield("search/#{name}_result".camelize.safe_constantize || Search::Result)
   end
+
+  def create_results_builder
+    yield("search/#{name}_results_builder".camelize.constantize)
+  end
 end
