@@ -29,4 +29,12 @@ describe Search::Source do
       expect(GitHubUsersSource.new.name).to be(:github_users)
     end
   end
+
+  describe '#search_url' do
+    context 'when is not implemented' do
+      it 'raises an exception' do
+        expect { Search::Source.new.search_url }.to raise_error(MethodNotImplemented)
+      end
+    end
+  end
 end

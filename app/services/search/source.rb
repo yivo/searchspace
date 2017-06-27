@@ -12,4 +12,8 @@ class Search::Source
   def name
     self.class.name.gsub(/(?:\ASearch::)|(?:Source\z)/, '').underscore.to_sym if self.class < Search::Source
   end
+
+  def search_url
+    method_not_implemented
+  end
 end
