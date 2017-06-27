@@ -37,4 +37,10 @@ describe Search::Source do
       end
     end
   end
+
+  describe '#create_criteria' do
+    it 'passes basic search criteria' do
+      expect(Search::Source.new.create_criteria { |k| k.new('HTC') }).to be_instance_of(Search::Criteria)
+    end
+  end
 end

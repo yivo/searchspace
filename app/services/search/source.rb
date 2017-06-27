@@ -16,4 +16,8 @@ class Search::Source
   def search_url
     method_not_implemented
   end
+
+  def create_criteria
+    yield("search/#{name}_criteria".camelize.safe_constantize || Search::Criteria)
+  end
 end
