@@ -6,7 +6,7 @@ describe Search::Source do
     end
 
     it 'knows what sources are available' do
-      expect(Search::Source.descendants).to contain_exactly(FooSource, BarSource)
+      expect(Search::Source.descendants).to include(FooSource, BarSource)
     end
   end
 
