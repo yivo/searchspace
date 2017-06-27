@@ -18,15 +18,27 @@ describe Search::Criteria do
     SearchCriteriaDescendant
   end
 
-  context 'when phrase has at least two chars' do
+  context 'when phrase is not blank and is not too long' do
     it 'is applicable' do
-      expect(criteria('ap').applicable?).to be_truthy
+      expect { criteria('aa').validate! }.not_to raise_error
+    end
+  end
+
+  context 'when phrase is not blank and is too long' do
+    it 'is not applicable' do
+      expect { criteria('a' * 999).validate! }.to raise_error(Search::CriteriaError)
+    end
+  end
+
+  context 'when phrase is not blank but is too short' do
+    it 'is not applicable' do
+      expect { criteria('a').validate! }.to raise_error(Search::CriteriaError)
     end
   end
 
   context 'when phrase is blank' do
     it 'is not applicable' do
-      expect(criteria(' ').applicable?).to be_falsey
+      expect { criteria(" \n").validate! }.to raise_error(Search::CriteriaError)
     end
   end
 
