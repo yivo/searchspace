@@ -1,4 +1,7 @@
 {
   "name": "searchspace dependencies",
-  "dependencies": {}
+  "dependencies": {
+    "eskimo":         "^1.1.3",
+    "compass-mixins": "^0.12.10"
+  }
 }
