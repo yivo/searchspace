@@ -18,9 +18,15 @@ html, body
 body
   overflow-y: scroll
 
+a
+  color:           #439cd7
+  text-decoration: none
+  +transition(color 0.2s ease)
+  &:hover
+    text-decoration: underline
+
 .search
   &-wrapper
-    min-width: 320px
     max-width: 700px
     margin:    0 auto
     padding:   20px
@@ -52,3 +58,40 @@ body
       background:   $white
       border-color: #439cd7
       +box-shadow(0 0 0 3px transparentize(#439cd7, 0.6))
+  &-results
+    margin-top: 30px
+    &-separator
+      margin: 15px 0
+      border-color: #d5d5d5
+
+.gsmarena-handhelds-result
+  &
+    height:   130px
+    position: relative
+  &-left
+    position: absolute
+    left:     0
+    top:      0
+    bottom:   0
+    width:    100px
+  &-right
+    width: auto
+    +calc(width, '100% - 110px')
+    margin-left: 110px
+    position:    relative
+    height:      100%
+  &-image
+    // Since we don't know dimensions.
+    max-width:  100%
+    max-height: 100%
+  &-name
+    font-size: 16px
+  &-controls
+    position: absolute
+    left:     0
+    bottom:   0
+    &-button
+      +normalize-button
+  &-source
+    color:       inherit
+    font-weight: 700

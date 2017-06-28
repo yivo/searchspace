@@ -1,0 +1,12 @@
+.gsmarena-handhelds-result
+  .gsmarena-handhelds-result-left
+    a(href=result.details.page_url target='_blank')
+      img.gsmarena-handhelds-result-image(src=result.details.image_url)
+  .gsmarena-handhelds-result-right
+    div
+      a.gsmarena-handhelds-result-name(href=result.details.page_url target='_blank')
+        =result.name
+    div
+      a.gsmarena-handhelds-result-source(href='http://www.gsmarena.com/') GSMArena.com
+    .gsmarena-handhelds-result-controls
+      button.gsmarena-handhelds-result-controls-button(type='button') show specs
