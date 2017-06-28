@@ -2,4 +2,4 @@
   each result, i in results
     if i > 0
       hr.search-results-separator
-    !=JST['search/' + result.source.replace(/_/g, '-') + '-result']({result})
+    !=JST['search/' + result.source.replace(/_/g, '-') + '-result']({result: result})
