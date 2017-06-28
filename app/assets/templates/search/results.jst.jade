@@ -1,3 +1,9 @@
+.search-results-count
+  if results.length > 0
+    | Found #{results.length} #{results.length === 1 ? 'result' : 'results'}.
+  else
+    | No results found.
+
 .search-results
   each result, i in results
     if i > 0
