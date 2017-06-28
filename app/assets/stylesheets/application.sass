@@ -8,6 +8,7 @@ html, body
   font-size:   14px
   line-height: (20 / 14)
   font-weight: 400
+  color:       #444
   background:  #F5F7FA
 
   // These are recommended by Lato author
@@ -16,3 +17,38 @@ html, body
 
 body
   overflow-y: scroll
+
+.search
+  &-wrapper
+    min-width: 320px
+    max-width: 700px
+    margin:    0 auto
+    padding:   20px
+  &-title
+    font-size:   30px
+    line-height: 1.1
+  &-slogan
+    font-size: 18px
+    font-weight: 300
+  &-header
+    margin-bottom: 30px
+  &-field
+    +normalize-input
+    display:    block
+    background: $white
+    width:      100%
+    padding:    10px
+    font-size:  16px
+    border:     1px solid #d5d5d5
+    +transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, background ease-in-out 0.15s)
+
+    +input-placeholder
+      opacity: 0.5
+
+    &:hover
+      background: #f7f7f7
+
+    &:focus
+      background:   $white
+      border-color: #439cd7
+      +box-shadow(0 0 0 3px transparentize(#439cd7, 0.6))

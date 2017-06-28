@@ -1,2 +1,15 @@
-- 6.times do |i|
-  *{tag: "h#{i+1}"} Hello, world!
+.search
+  .search-wrapper
+    .search-header
+      .search-title SEARCH SPACE
+      .search-slogan One website to search them all.
+    .search-body
+      input.search-field[
+        type          ='text'
+        autofocus     =true
+        spellcheck    ='true'
+        autocomplete  ='off'
+        autocapitalize='off'
+        autocorrect   ='off'
+        placeholder   ='I am looking for...'
+      ]
