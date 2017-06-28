@@ -13,6 +13,7 @@ gem 'bower-rails', '~> 0.11'
 gem 'pug-rails', '~> 2.0'
 gem 'method-not-implemented', '~> 1.0'
 gem 'faraday', '~> 0.12.1'
+gem 'sassc-rails-svg-data-url', '~> 1.0'
 
 group :development do
   gem 'faker'

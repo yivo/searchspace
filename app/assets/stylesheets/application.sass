@@ -8,7 +8,7 @@ html, body
   font-size:   14px
   line-height: (20 / 14)
   font-weight: 400
-  color:       #444
+  color:       #383838
   background:  #F5F7FA
 
   // These are recommended by Lato author
@@ -24,6 +24,10 @@ a
   +transition(color 0.2s ease)
   &:hover
     text-decoration: underline
+
+.text
+  &-nowrap
+    +nowrap
 
 .search
   &-wrapper
@@ -63,6 +67,16 @@ a
     &-separator
       margin: 15px 0
       border-color: #d5d5d5
+  &-loading-indicator
+    height:     300px
+    height:     70vh
+    background: svg-data-url('search/loading-dots.svg') no-repeat center center
+  &-network-error, &-server-error
+    margin-top:  150px
+    margin-top:  30vh
+    font-size:   20px
+    font-weight: 600
+    color:       #DA4453
 
 .gsmarena-handhelds-result
   &
