@@ -31,6 +31,13 @@ class Search
 
         # If user cleared search phrase or started to input something too short.
         else
+          # Kill any active requests.
+          @jqXHR?.abort()
+
+          # Clear queue (case when user continuos deletes phrase).
+          @performLater.cancel()
+
+          # Clear all results.
           @$outlet.empty()
       null
 
@@ -44,8 +51,15 @@ class Search
   bindHistoryEvents: ->
     $(window).on 'popstate', =>
       _.tap $.trim($.deparam(location.search.replace(/^\?/, '')).phrase), (phrase) =>
-        @$phrase.val(phrase)
+
+        # Kill any active requests.
         @jqXHR?.abort()
+
+        # Empty queue.
+        @performLater.cancel()
+
+        # Update value.
+        @$phrase.val(phrase)
 
         if @isSuitablePhrase(phrase)
           @perform(history: 'replace')
