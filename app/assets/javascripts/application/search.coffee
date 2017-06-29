@@ -4,7 +4,7 @@ class Search
   constructor: ->
     @$phrase      = $('#search-phrase')
     @$outlet      = $('#search-outlet')
-    @performLater = _.debounce(_.bind(@perform, this), 200)
+    @performLater = _.debounce(_.bind(@perform, this), 333)
 
     @bindInputEvents()
     @bindHistoryEvents()
@@ -12,78 +12,83 @@ class Search
     @focusPhrase()
 
     # Handles preset phrase.
-    @perform(history: 'replace') if @isSuitablePhrase(@getPhrase())
+    @check(history: 'replace')
 
   bindInputEvents: ->
-    @$phrase.data('previous-value', @getPhrase())
 
     # Handles user input.
     @$phrase.on 'input', =>
-      currentValue  = @getPhrase()
-      previousValue = @$phrase.data('previous-value')
-
-      if currentValue isnt previousValue
-        @$phrase.data('previous-value', currentValue)
-
-        # User input seems to be suitable phrase.
-        if @isSuitablePhrase(currentValue)
-          @performLater()
-
-        # If user cleared search phrase or started to input something too short.
-        else
-          # Kill any active requests.
-          @jqXHR?.abort()
-
-          # Clear queue (case when user continuos deletes phrase).
-          @performLater.cancel()
-
-          # Clear all results.
-          @$outlet.empty()
-      null
+      @check(search: 'later')
 
     # Handles enter key.
     @$phrase.on 'keypress', (e) =>
-      if e.keyCode is 13
-        @performLater.cancel()
-        @perform()
-      null
+      @check(search: 'immediately') if e.keyCode is 13
 
+    # Handles button click.
     $(document).on 'click', '.js-trigger-search', =>
-      @performLater.cancel()
-      @perform()
-      null
+      @check(search: 'immediately')
 
   bindHistoryEvents: ->
     $(window).on 'popstate', =>
+      # Perform these action:
+      #   1. Extract phrase from query string.
+      #   2. Update phrase in DOM.
+      #   3. Check and if required issue a search request.
+      #   4. Focus phrase input.
       _.tap $.trim($.deparam(location.search.replace(/^\?/, '')).phrase), (phrase) =>
-
-        # Kill any active requests.
-        @jqXHR?.abort()
-
-        # Empty queue.
-        @performLater.cancel()
-
-        # Update value.
         @$phrase.val(phrase)
-
-        if @isSuitablePhrase(phrase)
-          @perform(history: 'replace')
-        else
-          @$outlet.empty()
-
+        @check(search: 'immediately', history: 'replace')
         @focusPhrase()
       null
 
+  # Sets focus on input and moves caret to the end.
   focusPhrase: ->
     @$phrase[0].selectionStart = @$phrase[0].selectionEnd = @$phrase.val().length
     @$phrase.focus()
 
+  # Returns current phrase. Performs normalization before return.
   getPhrase: ->
-    $.trim( @$phrase.val() )
+    @normalizePhrase(@$phrase.val())
 
+  # Trims phrase and collapses whitespace in one space.
+  normalizePhrase: (phrase) ->
+    $.trim(phrase.replace(/\s+/, ' '))
+
+  # Checks if phrase is ready to be used for search (minimum length is 2 characters).
   isSuitablePhrase: (phrase) ->
-    $.trim(phrase).length > 2
+    @normalizePhrase(phrase).length >= 2
 
+  # Checks state and issues new search request is needed.
+  check: (options) ->
+    currentValue  = @getPhrase()
+    previousValue = @$phrase.data('previous-value')
+
+    if currentValue isnt previousValue
+
+      # Needed to compare values in future.
+      @$phrase.data('previous-value', currentValue)
+
+      # Kill any active requests.
+      @jqXHR?.abort()
+
+      # Clear any queued requests.
+      @performLater.cancel()
+
+      # User input seems to be suitable phrase.
+      if @isSuitablePhrase(currentValue)
+        if options?.search is 'immediately'
+          @perform(options)
+        else
+          @performLater(options)
+
+      # If user clears search phrase or starts to input something too short.
+      else
+
+        # Be responsive.
+        @$outlet.empty()
+    null
+
+  # Actually issues a search request.
   perform: (options) ->
     pageBaseURL = "#{location.origin}#{location.pathname}"
     pageFullURL = "#{pageBaseURL}?#{ $.param(phrase: @getPhrase()) }"
@@ -95,16 +100,22 @@ class Search
     @$outlet.html(JST['search/loading-indicator']())
 
     # Perform request.
-    @jqXHR?.abort()
     @jqXHR = jqXHR = $.getJSON('/api/search/' + encodeURIComponent(@getPhrase()))
 
-    jqXHR.always => @jqXHR = null
+    jqXHR.always =>
+      @jqXHR = null
 
-    jqXHR.done => @$outlet.html JST['search/results'](jqXHR.responseJSON)
+    jqXHR.done =>
+      @$outlet.html JST['search/results'](jqXHR.responseJSON)
 
     jqXHR.fail =>
+
+      # Aborted request is OK.
+      # This happends when user updates phrase and we issue new search request.
+      # We just cancel the previous.
       if jqXHR.statusText isnt 'abort'
         if jqXHR.readyState is 0
           @$outlet.html JST['search/network-error']()
         else
-          @$outlet.html JST['search/server-error']()
+          @$outlet.html JST['search/unknown-error']()
+    null
