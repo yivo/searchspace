@@ -4,7 +4,7 @@ module Search
 
     def sources
       Rails.application.eager_load!
-      Search::Source.descendants.map(&:new)
+      Search::Source.descendants.map(&:new).sort_by(&:name)
     end
     memoize :sources
   end
