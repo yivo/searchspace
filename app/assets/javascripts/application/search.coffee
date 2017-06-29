@@ -84,10 +84,7 @@ class Search
     pageFullURL = "#{pageBaseURL}?#{ $.param(phrase: @getPhrase()) }"
 
     # Manipulate history.
-    if options?.history?.replace
-      history.replaceState({}, '', pageFullURL)
-    else
-      history.pushState({}, '', pageFullURL)
+    history["#{options?.history ? 'push'}State"]({}, '', pageFullURL)
 
     # Loading indicators.
     @$outlet.html(JST['search/loading-indicator']())
