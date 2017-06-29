@@ -42,26 +42,45 @@ a
     font-weight: 300
   &-header
     margin-bottom: 30px
-  &-field
-    +normalize-input
-    display:    block
-    background: $white
-    width:      100%
-    padding:    10px
-    font-size:  16px
-    border:     1px solid #d5d5d5
-    +transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, background ease-in-out 0.15s)
+  &-phrase
+    &
+      position: relative
+    &-input
+      +normalize-input
+      display:    block
+      background: $white
+      width:      100%
+      padding:    10px
+      font-size:  16px
+      border:     1px solid #d5d5d5
+      +transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, background ease-in-out 0.15s)
 
-    +input-placeholder
-      opacity: 0.5
+      +input-placeholder
+        opacity: 0.5
 
-    &:hover
-      background: #f7f7f7
+      &:hover
+        background: #f7f7f7
 
-    &:focus
-      background:   $white
-      border-color: #439cd7
-      +box-shadow(0 0 0 3px transparentize(#439cd7, 0.6))
+      &:focus
+        background:   $white
+        border-color: #439cd7
+        +box-shadow(0 0 0 3px transparentize(#439cd7, 0.6))
+    &-button
+      +normalize-button
+      display:  block
+      position: absolute
+      top:      0
+      right:    0
+      bottom:   0
+      height:   100%
+      width:    44px
+      &-magnifier
+        &
+          vertical-align: text-bottom
+        path
+          fill: #d5d5d5
+          @at-root .search-phrase-button:hover &
+            fill: #439cd7
   &-results
     margin-top: 30px
     &-separator

@@ -48,6 +48,11 @@ class Search
         @perform()
       null
 
+    $(document).on 'click', '.js-trigger-search', =>
+      @performLater.cancel()
+      @perform()
+      null
+
   bindHistoryEvents: ->
     $(window).on 'popstate', =>
       _.tap $.trim($.deparam(location.search.replace(/^\?/, '')).phrase), (phrase) =>

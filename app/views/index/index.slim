@@ -4,14 +4,18 @@
       .search-title SEARCH SPACE
       .search-slogan One website to search them all.
     .search-body
-      input.search-field#search-phrase[
-        type          ='text'
-        autofocus     =true
-        spellcheck    ='true'
-        autocomplete  ='off'
-        autocapitalize='off'
-        autocorrect   ='off'
-        placeholder   ='I am looking for...'
-        value         =params[:phrase]
-      ]
+      .search-phrase
+        input.search-phrase-input#search-phrase[
+          type          ='text'
+          autofocus     =true
+          spellcheck    ='true'
+          autocomplete  ='off'
+          autocapitalize='off'
+          autocorrect   ='off'
+          placeholder   ='I am looking for...'
+          value         =params[:phrase]
+        ]
+        button.search-phrase-button.js-trigger-search type='button'
+          =embed_svg('search/magnifier.svg')
+
       #search-outlet
