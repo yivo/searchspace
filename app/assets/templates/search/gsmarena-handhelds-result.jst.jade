@@ -1,12 +1,19 @@
-.gsmarena-handhelds-result
-  .gsmarena-handhelds-result-left
-    a(href=result.details.page_url target='_blank')
-      img.gsmarena-handhelds-result-image(src=result.details.image_url)
-  .gsmarena-handhelds-result-right
-    div
-      a.gsmarena-handhelds-result-name(href=result.details.page_url target='_blank')
-        =result.name
-    div
-      a.gsmarena-handhelds-result-source(href='http://www.gsmarena.com/') GSMArena.com
-    .gsmarena-handhelds-result-actions
-      button.gsmarena-handhelds-result-actions-button(type='button') show specs
+.gsmarena-handhelds-result.js-search-result(data-source=result.source data-url=result.details.page_url)
+  .gsmarena-handhelds-result-inner
+    .gsmarena-handhelds-result-left
+      a(href=result.details.page_url target='_blank')
+        img.gsmarena-handhelds-result-image(src=result.details.image_url)
+    .gsmarena-handhelds-result-right
+      div
+        a.gsmarena-handhelds-result-name(href=result.details.page_url target='_blank')
+          =result.name
+      div
+        a.gsmarena-handhelds-result-source(href='http://www.gsmarena.com/') GSMArena.com
+      .gsmarena-handhelds-result-actions
+        button.gsmarena-handhelds-result-actions-button.js-toggle-search-result-details(
+          type             ='button'
+          data-loading-text='Loading specs...'
+          data-on-text     ='Hide specs'
+          data-off-text    ='Show specs'
+          data-error-text  ='Failed to load specs'
+        ) Show specs

@@ -1,0 +1,13 @@
+.gsmarena-handhelds-result-details.js-search-result-details
+  each category in specs
+    table.gsmarena-handhelds-result-specs
+      tbody
+        tr
+          th.gsmarena-handhelds-result-specs-title(colspan=2)=category.name
+        each spec in category.data
+          tr
+            td.gsmarena-handhelds-result-specs-name=spec.name
+            td.gsmarena-handhelds-result-specs-value
+              each line in spec.value.split(/[\n\r]+/)
+                =line
+                br
