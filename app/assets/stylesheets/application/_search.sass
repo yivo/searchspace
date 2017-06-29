@@ -1,0 +1,66 @@
+.search
+  &-wrapper
+    max-width: 700px
+    margin:    0 auto
+    padding:   20px
+  &-title
+    font-size:   30px
+    line-height: 1.1
+  &-slogan
+    font-size: 18px
+    font-weight: 300
+  &-header
+    margin-bottom: 30px
+  &-phrase
+    &
+      position: relative
+    &-input
+      +normalize-input
+      display:    block
+      background: $white
+      width:      100%
+      padding:    10px
+      font-size:  16px
+      border:     1px solid $ss-gray
+      +transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, background ease-in-out 0.15s)
+      +input-placeholder
+        opacity: 0.5
+      &:focus
+        background:   $white
+        border-color: $ss-blue
+        +box-shadow(0 0 0 3px transparentize($ss-blue, 0.6))
+    &-button
+      +normalize-button
+      display:  block
+      position: absolute
+      top:      0
+      right:    0
+      bottom:   0
+      height:   100%
+      width:    44px
+      &-magnifier
+        &
+          vertical-align: text-bottom
+        path
+          fill: $ss-gray
+          @at-root .search-phrase-button:hover &
+            fill: $ss-blue
+  &-results
+    margin-top: 30px
+    &-separator
+      margin: 15px 0
+      border-color: $ss-gray
+    &-count
+      font-weight: 600
+      font-size:   15px
+      margin-top:  4px
+  &-loading-indicator
+    height:     300px
+    height:     65vh
+    background: svg-data-url('search/loading-dots.svg') no-repeat center center
+  &-network-error, &-server-error
+    margin-top:  150px
+    margin-top:  30vh
+    font-size:   20px
+    font-weight: 600
+    color:       $ss-red
