@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     root 'index#index', as: :index
 
     namespace :api do
-      get 'search/:phrase', to: 'search#index', as: :search
+      # https://stackoverflow.com/questions/5369654/why-do-routes-with-a-dot-in-a-parameter-fail-to-match
+      get 'search/:phrase', to: 'search#index', as: :search, phrase: /[^\/]+/
     end
   end
 end

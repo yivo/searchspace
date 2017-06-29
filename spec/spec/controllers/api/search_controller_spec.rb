@@ -24,7 +24,7 @@ describe API::SearchController do
 
     context 'when phrase is blank' do
       it 'responds with HTTP 422' do
-        get :index, phrase: ''
+        get :index, phrase: ' '
         expect(response.status).to eq(422)
       end
     end
