@@ -7,6 +7,8 @@ At this moment you can only search for handheld devices at [GSMArena.com](http:/
 
 NOTE: This project is used only for testing purposes.
 
+Website supports History API, has a responsive markup and is error friendly.
+
 ### Implementation
 This project is written used latest Ruby on Rails 4.x (4.2.9). I tried to make thing extensible as I could do this for short period of time.
 
@@ -56,6 +58,8 @@ For this project I used RSpec for unit and Capybara for functional testing.
 I tried to test as mush as possible. The written tests are not perfect although.
 
 I used TravisCI for testing purposes and for deployment from master.
+
+To run tests execute `bundle exec rspec`. You may need a working Chrome installation.
 
 ### Problems
 There are some problems related to performance.
