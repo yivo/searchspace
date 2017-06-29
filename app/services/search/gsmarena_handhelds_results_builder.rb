@@ -1,6 +1,6 @@
 class Search::GSMArenaHandheldsResultsBuilder < Search::ResultsBuilder
-  def build(nokogiri_html_fragment)
-    nokogiri_html_fragment.css('#review-body ul li').map do |el|
+  def build(doc)
+    doc.css('#review-body ul li').map do |el|
 
       # Transform <br> into new lines.
       el.css('br').each { |br| br.replace("\n") }

@@ -1,5 +1,5 @@
 # http://www.gsmarena.com/htc_one-5313.php
-class GSMArenaHandheldsDetailsLoader
+class GSMArenaHandheldsResultDetailsLoader
   def load(url)
     response  = Faraday.get(url)
     document  = Nokogiri::HTML.fragment(response.body) { |config| config.nonet.huge.nowarning.noerror }
